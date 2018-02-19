@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+  routing_info:
+    job_statuses:
+      processing: in progress
+      net_error: failure
+      failed: failure
+      complete: success

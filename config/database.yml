@@ -85,5 +85,5 @@ test:
 production:
   <<: *default
   database: mapAPI_production
-  username: mapAPI
+  username: postgres
   password: <%= ENV['MAPAPI_DATABASE_PASSWORD'] %>
