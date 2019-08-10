@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationDecorator < Draper::Decorator
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

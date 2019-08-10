@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RouteController < ApplicationController
   before_action :set_routing_info, only: [:driving_info]
 
@@ -24,21 +26,22 @@ class RouteController < ApplicationController
   def routing
     begin
       routing_input = JSON.parse(request.body.read)
-      @routing_info = RoutingInfo.new({routing_input: routing_input})
-      @result = @routing_info.save
-      if @result
-        MapJob.perform_later(@routing_info.id)
-      else
-        @error_message = @routing_info.errors.messages.first[1].first + 
-        ' It should look like the followings: [  ["ROUTE_START_LATITUDE", "ROUTE_START_LONGITUDE"],  ["DROPOFF_LATITUDE_#1", "DROPOFF_LONGITUDE_#1"],  ... ]'
-      end
     rescue JSON::ParserError
       # Handle parsing error
-      @result = false
-      Rails.logger.info "JSON Parse Error." + request.body.read
-      @error_message = "The input body is not a json object."
+      Rails.logger.info 'JSON Parse Error.' + request.body.read
+      @error_message = 'The input body is not a json object.'
     end
 
+    @routing_info = RoutingInfo.new(routing_input: routing_input)
+    if @routing_info.save
+      MapJob.perform_later(@routing_info.id)
+    else
+      @error_message = @routing_info.errors.messages.first[1].first +
+                       'It should look like the followings: [' \
+                       ' ["ROUTE_START_LATITUDE", "ROUTE_START_LONGITUDE"],' \
+                       ' ["DROPOFF_LATITUDE_#1", "DROPOFF_LONGITUDE_#1"],' \
+                       ' ... ]'
+    end
   end
 
   # GET /route/:token
@@ -80,13 +83,14 @@ class RouteController < ApplicationController
     if @routing_info.present?
       # Do Nothing
     else
-      @routing_info = RoutingInfo.new({status: RoutingInfo::STATUS_FAILED })
-      @error_message = "The token is not found."
+      @routing_info = RoutingInfo.new(status: RoutingInfo::STATUS_FAILED)
+      @error_message = 'The token is not found.'
     end
   end
 
   private
-    def set_routing_info
-      @routing_info = RoutingInfo.find_by(token: params[:token])
-    end
+
+  def set_routing_info
+    @routing_info = RoutingInfo.find_by(token: params[:token])
+  end
 end

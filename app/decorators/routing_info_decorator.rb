@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoutingInfoDecorator < Draper::Decorator
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
@@ -8,10 +10,10 @@ class RoutingInfoDecorator < Draper::Decorator
   #     end
   #   end
   def status
-    if object.status != nil
+    if !object.status.nil?
       I18n.t("routing_info.job_statuses.#{object.status}")
     else
-      "Not Found"
+      'Not Found'
     end
   end
 end

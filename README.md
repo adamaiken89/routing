@@ -2,7 +2,7 @@
 
 **System Specification**
 
-* Language: Ruby 2.5.0
+* Language: Ruby 2.6.3
 * Framework: Rails 5.1.5
 * Database: Postgres 10
 * Cache DB: Redis 4.0.0

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateRoutingInfos < ActiveRecord::Migration[5.1]
   def change
     create_table :routing_infos do |t|
@@ -8,6 +10,6 @@ class CreateRoutingInfos < ActiveRecord::Migration[5.1]
       t.string :status, default: 'processing'
       t.timestamps
     end
-    add_index :routing_infos, [:token], :unique => true
+    add_index :routing_infos, [:token], unique: true
   end
 end

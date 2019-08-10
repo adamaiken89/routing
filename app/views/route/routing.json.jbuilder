@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if @result
   json.token @routing_info.token
 else
